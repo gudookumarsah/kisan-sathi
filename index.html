@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>किसान साथी — Kisan Sathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1f2417; --ink-soft:#2b3122; --paper:#f4ede0; --chalk:#f6f1e6;
+    --turmeric:#e2a53d; --sindoor:#c1442e; --leaf:#4c7a54; --leaf-dim:#3c6244;
+    --jute:#8a6a45; --jute-dark:#5c4529; --line: rgba(244,237,224,0.16);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--ink);color:var(--chalk);font-family:'Noto Sans Devanagari',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:900px;margin:0 auto;padding:28px 18px 60px;}
+  header{display:flex;flex-direction:column;gap:4px;margin-bottom:22px;border-bottom:1px solid var(--line);padding-bottom:18px;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--turmeric);}
+  h1{font-family:'Noto Serif Devanagari',serif;font-weight:700;font-size:clamp(28px,6vw,42px);margin:2px 0 0;color:var(--chalk);}
+  .sub{color:#c9c2b0;font-size:14.5px;margin-top:4px;}
+  .sub b{color:var(--chalk);font-weight:600;}
+  .board{background:radial-gradient(circle at 18% 22%, rgba(255,255,255,0.035) 0, transparent 45%),radial-gradient(circle at 76% 68%, rgba(255,255,255,0.03) 0, transparent 40%),var(--ink-soft);border:1px solid var(--line);border-radius:14px;padding:22px 20px 24px;margin-bottom:22px;box-shadow: inset 0 0 60px rgba(0,0,0,0.25);}
+  .board-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+  .board-title{font-family:'Noto Serif Devanagari',serif;font-weight:700;font-size:19px;color:var(--turmeric);}
+  .date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#a79f8c;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .chip{font-family:'Noto Sans Devanagari',sans-serif;font-size:14px;font-weight:500;background:transparent;border:1px solid rgba(244,237,224,0.28);color:var(--chalk);padding:7px 14px;border-radius:999px;cursor:pointer;transition:all .15s ease;}
+  .chip:hover{border-color:var(--turmeric);}
+  .chip.active{background:var(--turmeric);border-color:var(--turmeric);color:#211a0c;font-weight:600;}
+  .select-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;font-size:13.5px;}
+  .select-row label{display:flex;align-items:center;gap:8px;color:#c9c2b0;}
+  select{background:var(--ink);color:var(--chalk);border:1px solid rgba(244,237,224,0.28);border-radius:8px;padding:7px 10px;font-family:'Noto Sans Devanagari',sans-serif;font-size:13.5px;}
+  .rate-display{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:18px 4px 8px;border-bottom:1px dashed rgba(244,237,224,0.25);margin-bottom:18px;}
+  .rate-num{font-family:'Caveat',cursive;font-weight:700;font-size:64px;line-height:1;color:var(--chalk);letter-spacing:1px;}
+  .rate-unit{font-size:14px;color:#a79f8c;margin-bottom:10px;}
+  .rate-market{font-size:14px;color:var(--turmeric);margin-bottom:10px;}
+  .advisory-box{background:var(--paper);color:var(--ink);border-radius:10px;padding:16px 18px;position:relative;min-height:64px;}
+  .advisory-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--jute-dark);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
+  .advisory-text{font-size:15.5px;color:#2b2418;}
+  .advisory-text.loading{color:#8a7f68;font-style:italic;}
+  .tone-toggle{display:flex;gap:6px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;}
+  .tone-btn{background:transparent;border:1px solid var(--jute);color:var(--jute-dark);border-radius:5px;padding:3px 8px;cursor:pointer;font-family:inherit;font-size:10.5px;}
+  .tone-btn.active{background:var(--jute-dark);color:var(--chalk);border-color:var(--jute-dark);}
+  .ask-btn{margin-top:14px;background:var(--leaf);color:#f4ede0;border:none;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;transition:background .15s ease;}
+  .ask-btn:hover{background:var(--leaf-dim);}
+  .ask-btn:disabled{opacity:.5;cursor:not-allowed;}
+  .compare{margin-bottom:26px;}
+  .compare h2{font-family:'Noto Serif Devanagari',serif;font-size:18px;color:var(--chalk);margin:0 0 4px;}
+  .compare .hint{font-size:13px;color:#a79f8c;margin-bottom:14px;}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+  .bar-label{width:150px;flex-shrink:0;font-size:13px;color:#c9c2b0;}
+  .bar-track{flex:1;background:rgba(244,237,224,0.08);border-radius:5px;overflow:hidden;height:22px;position:relative;}
+  .bar-fill{height:100%;background:var(--jute);border-radius:5px 0 0 5px;transition:width .5s ease;}
+  .bar-fill.best{background:var(--leaf);}
+  .bar-fill.home{background:var(--turmeric);}
+  .bar-val{width:74px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--chalk);flex-shrink:0;}
+  .badge{font-size:10.5px;font-family:'IBM Plex Mono',monospace;background:var(--leaf);color:#0f1a11;padding:2px 6px;border-radius:4px;margin-left:6px;}
+  .how{background:var(--ink-soft);border:1px solid var(--line);border-radius:14px;padding:20px 20px 22px;margin-bottom:16px;}
+  .how h2{font-family:'Noto Serif Devanagari',serif;font-size:17px;color:var(--turmeric);margin:0 0 12px;}
+  .how ul{margin:0;padding-left:18px;}
+  .how li{font-size:13.8px;color:#d6d0c1;margin-bottom:8px;}
+  .how li b{color:var(--chalk);}
+  .disclaimer{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8a8271;border-top:1px solid var(--line);margin-top:14px;padding-top:12px;}
+  footer{text-align:center;font-size:12px;color:#6f6858;margin-top:20px;}
+  @media (max-width:520px){ .bar-label{width:100px;font-size:11.5px;} .rate-num{font-size:48px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">AMPIS डाटामा आधारित &nbsp;·&nbsp; Gemini free tier द्वारा संचालित</span>
+    <h1>किसान साथी</h1>
+    <div class="sub">तराई/मधेशका किसानका लागि <b>AI-संचालित बजार मूल्य सल्लाहकार</b></div>
+  </header>
+
+  <div class="board">
+    <div class="board-head">
+      <span class="board-title">🌿 आजको भाउ पाटी</span>
+      <span class="date" id="dateLabel">मिति लोड हुँदैछ...</span>
+    </div>
+    <div class="chip-row" id="cropChips"></div>
+    <div class="select-row">
+      <label>तपाईंको नजिकको बजार: <select id="homeMarket"></select></label>
+    </div>
+    <div class="rate-display">
+      <div><div class="rate-num" id="rateNum">--</div></div>
+      <div class="rate-unit">रु / केजी</div>
+      <div class="rate-market" id="rateMarket"></div>
+    </div>
+    <div class="advisory-box">
+      <div class="advisory-label">
+        <span>🤖 AI सल्लाह</span>
+        <span class="tone-toggle">
+          <button class="tone-btn active" id="toneStandard">मानक</button>
+          <button class="tone-btn" id="toneLocal">तराई लवज</button>
+        </span>
+      </div>
+      <div class="advisory-text" id="advisoryText">डाटा लोड हुँदैछ...</div>
+    </div>
+    <button class="ask-btn" id="askBtn" disabled>AI सल्लाह लिनुहोस् →</button>
+  </div>
+
+  <div class="compare">
+    <h2>बजार तुलना</h2>
+    <div class="hint">यही बालीको मूल्य अरू बजारमा कति छ, हेर्नुहोस्</div>
+    <div id="compareBars"></div>
+  </div>
+
+  <div class="how">
+    <h2>यो कसरी काम गर्छ</h2>
+    <ul>
+      <li><b>डाटा स्रोत:</b> कृषि विभागको सार्वजनिक AMPIS प्रणाली — <code>data.json</code> फाइल सम्पादन गरेर दैनिक अपडेट गर्न सकिन्छ</li>
+      <li><b>AI तह:</b> Google Gemini (नि:शुल्क तह) — कुनै मासिक शुल्क छैन</li>
+      <li><b>होस्टिङ:</b> Netlify नि:शुल्क तह</li>
+      <li><b>बाँडफाँड:</b> यो लिंक सिधै WhatsApp समूहमा साट्न सकिन्छ — छुट्टै एप वा शुल्क आवश्यक छैन</li>
+    </ul>
+    <div class="disclaimer">मूल्य डाटा <code>data.json</code> फाइलबाट लोड हुन्छ। हाल प्रतिनिधिमूलक हो; दैनिक अपडेटको लागि सोही फाइल बदल्नुहोस्।</div>
+  </div>
+
+  <footer>Kisan Sathi — free, self-hosted pilot tool</footer>
+</div>
+
+<script>
+let DATA = null;
+let state = { crop: "tomato", home: "dhalkebar", tone: "standard" };
+
+const cropChipsEl = document.getElementById('cropChips');
+const homeSelectEl = document.getElementById('homeMarket');
+const rateNumEl = document.getElementById('rateNum');
+const rateMarketEl = document.getElementById('rateMarket');
+const compareBarsEl = document.getElementById('compareBars');
+const advisoryTextEl = document.getElementById('advisoryText');
+const askBtn = document.getElementById('askBtn');
+const dateLabel = document.getElementById('dateLabel');
+
+async function init(){
+  try{
+    const res = await fetch('./data.json');
+    DATA = await res.json();
+  } catch(e){
+    advisoryTextEl.textContent = 'data.json लोड गर्न सकिएन। फाइल यही फोल्डरमा छ भन्ने पक्का गर्नुहोस्।';
+    return;
+  }
+
+  dateLabel.textContent = 'मिति: ' + (DATA.date_bs || '--');
+
+  Object.entries(DATA.crops).forEach(([key,c])=>{
+    const chip = document.createElement('button');
+    chip.className = 'chip' + (key===state.crop ? ' active':'');
+    chip.textContent = c.label;
+    chip.dataset.key = key;
+    chip.onclick = ()=>{ state.crop = key; render(); syncChips(); };
+    cropChipsEl.appendChild(chip);
+  });
+  Object.entries(DATA.markets).forEach(([key,label])=>{
+    const opt = document.createElement('option');
+    opt.value = key; opt.textContent = label;
+    homeSelectEl.appendChild(opt);
+  });
+  homeSelectEl.value = state.home;
+  homeSelectEl.onchange = (e)=>{ state.home = e.target.value; render(); };
+
+  document.getElementById('toneStandard').onclick = ()=>setTone('standard');
+  document.getElementById('toneLocal').onclick = ()=>setTone('local');
+  askBtn.onclick = getAdvisory;
+  askBtn.disabled = false;
+
+  render();
+}
+
+function setTone(t){
+  state.tone = t;
+  document.getElementById('toneStandard').classList.toggle('active', t==='standard');
+  document.getElementById('toneLocal').classList.toggle('active', t==='local');
+}
+function syncChips(){
+  [...cropChipsEl.children].forEach(c=>c.classList.toggle('active', c.dataset.key===state.crop));
+}
+
+function render(){
+  const crop = DATA.crops[state.crop];
+  const homePrice = crop.prices[state.home];
+  rateNumEl.textContent = homePrice;
+  rateMarketEl.textContent = DATA.markets[state.home];
+  advisoryTextEl.textContent = '"AI सल्लाह लिनुहोस्" थिच्नुहोस्।';
+  advisoryTextEl.classList.remove('loading');
+
+  compareBarsEl.innerHTML = '';
+  const entries = Object.entries(crop.prices);
+  const maxPrice = Math.max(...entries.map(e=>e[1]));
+  const bestKey = entries.reduce((a,b)=> b[1]>a[1] ? b : a)[0];
+  entries.sort((a,b)=>b[1]-a[1]);
+  entries.forEach(([key,price])=>{
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    const isBest = key===bestKey;
+    const isHome = key===state.home;
+    row.innerHTML = `
+      <div class="bar-label">${DATA.markets[key]}${isHome?' <span class="badge" style="background:var(--turmeric);color:#211a0c;">तपाईं</span>':''}${isBest?' <span class="badge">उत्तम</span>':''}</div>
+      <div class="bar-track"><div class="bar-fill ${isBest?'best':''} ${isHome?'home':''}" style="width:${(price/maxPrice*100).toFixed(0)}%"></div></div>
+      <div class="bar-val">रु ${price}</div>
+    `;
+    compareBarsEl.appendChild(row);
+  });
+}
+
+function fallbackAdvisory(){
+  const crop = DATA.crops[state.crop];
+  const homePrice = crop.prices[state.home];
+  const entries = Object.entries(crop.prices);
+  const [bestKey, bestPrice] = entries.reduce((a,b)=> b[1]>a[1] ? b : a);
+  if(bestKey === state.home){
+    return `${DATA.markets[state.home]}मा नै अहिले राम्रो मूल्य पाइँदैछ (रु ${homePrice}/केजी)। यहीं बेच्नु फाइदाजनक हुन्छ।`;
+  }
+  const gap = ((bestPrice - homePrice)/homePrice*100).toFixed(0);
+  return `${DATA.markets[bestKey]}मा मूल्य रु ${bestPrice} सम्म छ, तपाईंको भन्दा ${gap}% बढी। ढुवानी खर्च हिसाब गरेर हेर्नुहोस्।`;
+}
+
+async function getAdvisory(){
+  askBtn.disabled = true;
+  advisoryTextEl.textContent = 'सल्लाह तयार गर्दै...';
+  advisoryTextEl.classList.add('loading');
+
+  const crop = DATA.crops[state.crop];
+  const homePrice = crop.prices[state.home];
+  const othersText = Object.entries(crop.prices)
+    .filter(([k])=>k!==state.home)
+    .map(([k,p])=>`${DATA.markets[k]}: रु ${p}`)
+    .join(', ');
+
+  try{
+    const res = await fetch('/.netlify/functions/advisory', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        cropLabel: crop.label,
+        homeMarketLabel: DATA.markets[state.home],
+        homePrice, othersText, tone: state.tone
+      })
+    });
+    const data = await res.json();
+    advisoryTextEl.textContent = data.text || fallbackAdvisory();
+  } catch(err){
+    console.error('Advisory call failed:', err);
+    advisoryTextEl.textContent = fallbackAdvisory();
+  } finally {
+    advisoryTextEl.classList.remove('loading');
+    askBtn.disabled = false;
+  }
+}
+
+init();
+</script>
+</body>
+</html>

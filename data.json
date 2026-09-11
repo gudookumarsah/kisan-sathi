@@ -1,0 +1,20 @@
+{
+  "date_bs": "भदौ १४, २०८३",
+  "note": "प्रतिनिधिमूलक डेमो डाटा — AMPIS को ढाँचामा आधारित। दैनिक अपडेटको लागि यो फाइल बदल्नुहोस्।",
+  "markets": {
+    "dhalkebar": "ढल्केवर, धनुषा",
+    "lalbandi": "लालबन्दी, सर्लाही",
+    "kalimati": "कालीमाटी, काठमाडौं",
+    "pokhara": "पोखरा, कास्की",
+    "kohalpur": "कोहलपुर, बाँके",
+    "butwal": "बुटवल, रुपन्देही"
+  },
+  "crops": {
+    "tomato":   { "label": "गोलभेंडा (ठूलो)",    "prices": { "dhalkebar": 46, "lalbandi": 48, "kalimati": 75, "pokhara": 82, "kohalpur": 54, "butwal": 58 } },
+    "potato":   { "label": "आलु (रातो)",         "prices": { "dhalkebar": 42, "lalbandi": 40, "kalimati": 58, "pokhara": 55, "kohalpur": 47, "butwal": 50 } },
+    "onion":    { "label": "प्याज (सुकेको)",      "prices": { "dhalkebar": 65, "lalbandi": 62, "kalimati": 88, "pokhara": 85, "kohalpur": 70, "butwal": 74 } },
+    "cauli":    { "label": "काउली",              "prices": { "dhalkebar": 35, "lalbandi": 33, "kalimati": 60, "pokhara": 55, "kohalpur": 40, "butwal": 44 } },
+    "cabbage":  { "label": "बन्दा",              "prices": { "dhalkebar": 22, "lalbandi": 20, "kalimati": 35, "pokhara": 32, "kohalpur": 26, "butwal": 28 } },
+    "chili":    { "label": "खुर्सानी (हरियो)",    "prices": { "dhalkebar": 95, "lalbandi": 90, "kalimati": 140, "pokhara": 130, "kohalpur": 100, "butwal": 110 } }
+  }
+}
